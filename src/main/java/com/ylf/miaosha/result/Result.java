@@ -10,7 +10,7 @@ public class Result <T>{
         this.msg ="success";
         this.data=data;
     }
-    private Result(Codemsg cm) {//是错误的时候需要传入自定义类型的Codemsg信息
+    private Result(CodeMsg cm) {//是错误的时候需要传入自定义类型的Codemsg信息
         if(cm==null)
             return;
         this.code=cm.getCode();
@@ -20,7 +20,7 @@ public class Result <T>{
     {
         return new Result<T>(data);
     }
-    public static <T> Result<T> error(Codemsg cm)
+    public static <T> Result<T> error(CodeMsg cm)
     {
         return new Result<T>(cm);
     }

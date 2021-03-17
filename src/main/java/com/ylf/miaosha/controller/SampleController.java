@@ -2,7 +2,7 @@ package com.ylf.miaosha.controller;
 
 import com.ylf.miaosha.domain.User;
 import com.ylf.miaosha.redis.UserKey;
-import com.ylf.miaosha.result.Codemsg;
+import com.ylf.miaosha.result.CodeMsg;
 import com.ylf.miaosha.result.Result;
 import com.ylf.miaosha.redis.RedisService;
 import com.ylf.miaosha.service.UserService;
@@ -37,7 +37,7 @@ public class SampleController {
     @ResponseBody
     public Result<String> helloerror()
     {
-        return Result.error(Codemsg.SERVER_ERROR);
+        return Result.error(CodeMsg.SERVER_ERROR);
     }
 
     @RequestMapping("/db/get")
