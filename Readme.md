@@ -29,27 +29,27 @@ JMeter
 
 (1)登陆：
 
-![屏幕快照 2021-03-26 21.53.12](1/操作图片/屏幕快照 2021-03-26 21.53.12.png)
+![屏幕快照 2021-03-26 21.53.12](https://github.com/yanglingfeng001/miaosha/blob/master/%E6%93%8D%E4%BD%9C%E5%9B%BE%E7%89%87/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202021-03-26%2021.53.12.png)
 
 （2）进入商品列表，点击详情查看商品详情
 
-![屏幕快照 2021-03-26 21.53.16](/Users/yanglingfeng/IdeaProjects/miaosha/操作图片/屏幕快照 2021-03-26 21.53.16.png)
+![屏幕快照 2021-03-26 21.53.16](https://github.com/yanglingfeng001/miaosha/blob/master/%E6%93%8D%E4%BD%9C%E5%9B%BE%E7%89%87/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202021-03-26%2021.53.16.png)
 
 （3）查看商品详情，页面中有5s会自动刷新和失效的验证码，请快速输入
 
-![屏幕快照 2021-03-26 21.53.21](/Users/yanglingfeng/IdeaProjects/miaosha/操作图片/屏幕快照 2021-03-26 21.53.21.png)
+![屏幕快照 2021-03-26 21.53.21](https://github.com/yanglingfeng001/miaosha/blob/master/%E6%93%8D%E4%BD%9C%E5%9B%BE%E7%89%87/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202021-03-26%2021.53.19.png)
 
 （4）如果用户已经秒杀过，提示不能重复秒杀，用户输入错误验证码或者不输入验证码会提示验证码有问题
 
-![屏幕快照 2021-03-26 21.53.40](/Users/yanglingfeng/IdeaProjects/miaosha/操作图片/屏幕快照 2021-03-26 21.53.40.png)
+![屏幕快照 2021-03-26 21.53.40](https://github.com/yanglingfeng001/miaosha/blob/master/%E6%93%8D%E4%BD%9C%E5%9B%BE%E7%89%87/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202021-03-26%2021.53.40.png)
 
-![屏幕快照 2021-03-26 21.53.49](/Users/yanglingfeng/IdeaProjects/miaosha/操作图片/屏幕快照 2021-03-26 21.53.49.png)
+![屏幕快照 2021-03-26 21.53.49](https://github.com/yanglingfeng001/miaosha/blob/master/%E6%93%8D%E4%BD%9C%E5%9B%BE%E7%89%87/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202021-03-26%2021.53.49.png)
 
 （5）通过验证码且未秒杀过可以秒杀，点击确认查看订单详情
 
-![屏幕快照 2021-03-26 21.54.20](/Users/yanglingfeng/IdeaProjects/miaosha/操作图片/屏幕快照 2021-03-26 21.54.20.png)
+![屏幕快照 2021-03-26 21.54.20](https://github.com/yanglingfeng001/miaosha/blob/master/%E6%93%8D%E4%BD%9C%E5%9B%BE%E7%89%87/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202021-03-26%2021.54.20.png)
 
-![屏幕快照 2021-03-26 21.54.22](/Users/yanglingfeng/IdeaProjects/miaosha/操作图片/屏幕快照 2021-03-26 21.54.22.png)
+![屏幕快照 2021-03-26 21.54.22](https://github.com/yanglingfeng001/miaosha/blob/master/%E6%93%8D%E4%BD%9C%E5%9B%BE%E7%89%87/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202021-03-26%2021.54.22.png)
 
 ## 一些问题：
 
@@ -62,8 +62,6 @@ JMeter
 对于（1）：前端加验证码，防止用户同时发出多个请求，在后端的miaosha_order表中，对user_id和goods_id加唯一索引，确保一个用户对一个商品绝对不会生成两个订单。
 
 对于（2）：我们的减库存的sql上应该加上库存数量的判断：
-
-![img](file:////Users/yanglingfeng/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image002.jpg)
 
 数据库更新记录的时候会加锁，实际上是串行的执行update的，因此绝对不会卖超！
 
@@ -95,7 +93,7 @@ Redis中的数量不是库存，它的作用仅仅时候只是为了阻挡多余
 
 ### 4. 为什么Redis中的数量会减成负数？
 
-![img](file:////Users/yanglingfeng/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image004.jpg)
+
 
 假如redis中的数量是1，这个时候同时过来100个请求，大家一起去执行decr,数量就会减成-99，这是正常的。
 
