@@ -27,7 +27,36 @@ public class MiaoshaUserService {
     RedisService redisService;
     public MiaoshaUser getById(long id)
     {
-        return miaoshaUserDao.getById(id);
+         //从缓存里取
+        MiaoshaUser user=redisService.get(MiaoShaUserKey.getById,""+id,MiaoshaUser.class);
+        if(user!=null)//缓存里没有
+        {
+            return user;
+        }
+        user=miaoshaUserDao.getById(id);//从数据库取
+        if(user!=null)//数据库里取到
+        {
+            redisService.set(MiaoShaUserKey.getById,""+id,user);//放到缓存里面去
+        }
+        return user;
+    }
+    public boolean updatePassword(String token,long id,String passwordNew)
+    {
+        //取user
+        MiaoshaUser user=getById(id);
+        if(user==null)
+        {
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        MiaoshaUser toBeUpdate=new MiaoshaUser();
+        toBeUpdate.setId(id);
+        toBeUpdate.setPassword(MD5Util.formPassToDBPass(passwordNew,user.getSalt()));
+        miaoshaUserDao.update(toBeUpdate);
+        //处理缓存
+        redisService.delete(MiaoShaUserKey.getById,""+id);
+        user.setPassword(toBeUpdate.getPassword());
+        redisService.set(MiaoShaUserKey.token,token,user);
+        return true;
     }
 
     public boolean login(HttpServletResponse response,LoginVo loginVo) {
@@ -57,14 +86,15 @@ public class MiaoshaUserService {
 //        cookie.setPath("/");
 //        response.addCookie(cookie);
         //添加cookie
-        addCookie(response,user);
+        //登陆成功，生成一个随机的cookie
+        String token= UUIDUtil.uuid();
+        addCookie(response,token,user);
         return true;
     }
 
-    private void addCookie(HttpServletResponse response,MiaoshaUser miaoshaUser)
+    private void addCookie(HttpServletResponse response,String token,MiaoshaUser miaoshaUser)
     {
-        //登陆成功，生成一个随机的cookie
-        String token= UUIDUtil.uuid();
+        //没必要每次都新建一个token，用原来的老token就行了
         //把个人信息存放到一个第三方的缓存之中
         redisService.set(MiaoShaUserKey.token,token,miaoshaUser);
         Cookie cookie=new Cookie(COOKIE_NAME_TOKEN,token);
@@ -80,7 +110,7 @@ public class MiaoshaUserService {
         MiaoshaUser miaoshaUser=redisService.get(MiaoShaUserKey.token,token,MiaoshaUser.class);
         //先别急，更新一下过期时间，延长一下有效期
         if(miaoshaUser!=null) {
-            addCookie(response, miaoshaUser);
+            addCookie(response, token,miaoshaUser);
         }
         return miaoshaUser;
     }

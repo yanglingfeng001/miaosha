@@ -1,6 +1,7 @@
 package com.ylf.miaosha.controller;
 
 import com.ylf.miaosha.domain.User;
+import com.ylf.miaosha.rabbitmq.MQSender;
 import com.ylf.miaosha.redis.UserKey;
 import com.ylf.miaosha.result.CodeMsg;
 import com.ylf.miaosha.result.Result;
@@ -17,9 +18,41 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/demo")
 public class SampleController {
     @Autowired
+    MQSender sender;
+    @Autowired
     UserService userService;//自动注入服务
     @Autowired
     RedisService redisService;//自动注入服务
+//    @RequestMapping("/mq/header")
+//    @ResponseBody
+//    public Result<String> header ()
+//    {
+//        sender.sendHeader("hello,coco");
+//        return Result.success("hello,coco");
+//    }
+//    @RequestMapping("/mq/fanout")
+//    @ResponseBody
+//    public Result<String> fanout ()
+//    {
+//        sender.sendFanout("hello,coco");
+//        return Result.success("hello,coco");
+//    }
+//    @RequestMapping("/mq/topic")
+//    @ResponseBody
+//    public Result<String> topic ()
+//    {
+//        sender.sendTopic("hello,coco");
+//        return Result.success("hello,coco");
+//    }
+//
+//    @RequestMapping("/mq/direct")
+//    @ResponseBody
+//    public Result<String> mq()
+//    {
+//        sender.send("hello,coco");
+//        return Result.success("hello,coco");
+//    }
+
     @RequestMapping("/thymeleaf")
     public String thymeleaf(Model model)
     {
