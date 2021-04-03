@@ -1,5 +1,6 @@
 package com.ylf.miaosha.domain;
 
+//MiaoshaOrder也相当于OrderInfo的简略版
 public class MiaoshaOrder {
     private Long id;
     private Long userId;

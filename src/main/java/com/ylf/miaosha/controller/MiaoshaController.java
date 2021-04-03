@@ -47,6 +47,8 @@ public class MiaoshaController implements InitializingBean {
 
     private Map<Long,Boolean> localOverMap=new HashMap<>();
 
+
+    //在商品开始秒杀之后才能获取秒杀地址，通过验证码验证后返回一个真正的秒杀地址，然后通过将秒杀地址和需要的数据重新传入判断是否秒杀成功
     @AccessLimit(seconds=5,maxCount=5,needLogin=true)
     @RequestMapping(value="/path", method=RequestMethod.GET)
     @ResponseBody

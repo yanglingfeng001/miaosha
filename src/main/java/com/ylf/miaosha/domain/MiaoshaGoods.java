@@ -2,6 +2,8 @@ package com.ylf.miaosha.domain;
 
 import java.util.Date;
 
+
+//MiaoshaGoods表相当于goods表的简略版id与goods表的id联系起来
 public class MiaoshaGoods {
     private Long id;
     private Long goodsId;

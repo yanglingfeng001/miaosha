@@ -29,6 +29,8 @@ public class MiaoshaService {
     OrderService orderService;
     @Autowired
     RedisService redisService;
+
+    //获取秒杀结果 -1，0，1代表不同结果
     public long getMiaoshaResult(Long userId, long goodsId) {
         MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(userId, goodsId);
         if(order != null) {//秒杀成功
@@ -42,6 +44,8 @@ public class MiaoshaService {
             }
         }
     }
+
+    //减库存 减库存成功后还要创建两个订单
     public OrderInfo miaosha(MiaoshaUser user, GoodsVo goods) {
         //事务操作 减库存 下订单 写入秒杀订单
         //减库存
@@ -57,13 +61,16 @@ public class MiaoshaService {
             return null;
         }
     }
+
     private void setGoodsOver(Long goodsId) {
         redisService.set(MiaoshaKey.isGoodsOver, ""+goodsId, true);
     }
 
+
     private boolean getGoodsOver(long goodsId) {
         return redisService.exists(MiaoshaKey.isGoodsOver, ""+goodsId);
     }
+
     public void reset(List<GoodsVo> goodsList) {
         goodsService.resetStock(goodsList);
         orderService.deleteOrders();

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @ResponseBody
 public class GlobalExceptionHandler {
-    @ExceptionHandler(value=Exception.class)
+    @ExceptionHandler(value=Exception.class)//全局异常捕捉
     public Result<String> exceptionHandler(HttpServletRequest request, Exception e){
         e.printStackTrace();
         if(e instanceof GlobalException) {

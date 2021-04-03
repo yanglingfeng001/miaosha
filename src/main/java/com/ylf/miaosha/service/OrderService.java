@@ -29,6 +29,7 @@ public class OrderService {
 
     }
 
+    //创建订单使用transactional注解，创建订单在两个表中要进行同步
     @Transactional
     public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
         OrderInfo orderInfo = new OrderInfo();

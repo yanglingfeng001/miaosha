@@ -1,5 +1,6 @@
 package com.ylf.miaosha.domain;
 
+//测试用
 public class User {
     private int id;
     private String name;

@@ -5,6 +5,6 @@ public class MiaoShaUserKey extends BasePrefix{
     private MiaoShaUserKey(int expireSeconds,String prefix) {
         super(expireSeconds,prefix);
     }
-    public static MiaoShaUserKey token=new MiaoShaUserKey(TOKEN_EXPIRE,"tk");//相当于返回了一个前缀为UserKey:id的永不超时的KeyPrefix
+    public static MiaoShaUserKey token=new MiaoShaUserKey(TOKEN_EXPIRE,"tk");//相当于返回了一个前缀为UserKey:tk的永不超时的KeyPrefix
     public static MiaoShaUserKey getById=new MiaoShaUserKey(0,"id");//希望对象缓存是永久有效的，所以有效期为永不过期
 }

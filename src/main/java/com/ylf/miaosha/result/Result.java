@@ -1,5 +1,6 @@
 package com.ylf.miaosha.result;
 
+//Result.success()和Result.error()两种调用方式不同，返回不同结果
 public class Result <T>{
     private int code;
     private String msg;

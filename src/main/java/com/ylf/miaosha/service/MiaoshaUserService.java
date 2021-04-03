@@ -25,6 +25,8 @@ public class MiaoshaUserService {
 
     @Autowired
     RedisService redisService;
+
+    //从缓存里或者数据库中取得user信息
     public MiaoshaUser getById(long id)
     {
          //从缓存里取
@@ -59,6 +61,7 @@ public class MiaoshaUserService {
         return true;
     }
 
+    //首先通过参数校验，然后比对用户密码，如果登陆成功，添加cookie或者更新老cookie的时间
     public boolean login(HttpServletResponse response,LoginVo loginVo) {
         if(loginVo==null)
             throw new GlobalException(CodeMsg.SERVER_ERROR);
@@ -92,10 +95,11 @@ public class MiaoshaUserService {
         return true;
     }
 
+    //添加cookie到本地，然后在服务器redis中缓存用户信息
     private void addCookie(HttpServletResponse response,String token,MiaoshaUser miaoshaUser)
     {
         //没必要每次都新建一个token，用原来的老token就行了
-        //把个人信息存放到一个第三方的缓存之中
+        //把个人信息存放到一个第三方的缓存之中，并把生成的token放在浏览器缓存中
         redisService.set(MiaoShaUserKey.token,token,miaoshaUser);
         Cookie cookie=new Cookie(COOKIE_NAME_TOKEN,token);
         cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
